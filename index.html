@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>App Cecoe</title>
+  <meta name="description" content="Generador de mensajes de WhatsApp para la Central de Enlace y Comunicaciones Chuquicamata">
+  <meta name="theme-color" content="#0f1720">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Cecoe">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="btnVolver" class="icon-btn" aria-label="Volver" hidden>&larr;</button>
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <div>
+        <strong id="tituloVista">App Cecoe</strong>
+        <small>Cecoe Chuquicamata</small>
+      </div>
+    </div>
+  </header>
+
+  <!-- Operador (compartido por todos los módulos) -->
+  <section class="operador card">
+    <label for="selOperador">Operador de turno</label>
+    <select id="selOperador"></select>
+    <div id="boxReemplazo" hidden>
+      <label for="txtReemplazo">Nombre del reemplazo</label>
+      <input id="txtReemplazo" type="text" placeholder="Nombre y apellidos" autocomplete="off">
+      <p class="hint">En la firma se mostrará como <b>Operador de turno (R)</b>.</p>
+    </div>
+  </section>
+
+  <main id="app"></main>
+
+  <!-- Vista previa + acciones -->
+  <section id="panelSalida" class="salida" hidden>
+    <h2>Vista previa</h2>
+    <div class="burbuja" id="preview"></div>
+    <div class="acciones">
+      <button id="btnCopiar" class="btn">Copiar</button>
+      <button id="btnWsp" class="btn btn-wsp">Enviar por WhatsApp</button>
+    </div>
+    <button id="btnLimpiar" class="btn-link">Limpiar formulario</button>
+  </section>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

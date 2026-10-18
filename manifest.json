@@ -1,0 +1,16 @@
+{
+  "name": "App Cecoe",
+  "short_name": "Cecoe",
+  "description": "Mensajes de WhatsApp para la Central de Enlace y Comunicaciones Chuquicamata",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1720",
+  "theme_color": "#0f1720",
+  "lang": "es",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
