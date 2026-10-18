@@ -100,6 +100,7 @@ function toast(msg) {
 /* ---------- Operador (compartido) ---------- */
 function operadorActual() {
   const sel = $("#selOperador").value;
+  if (!sel) return { nombre: "(Seleccione operador)", reemplazo: false };
   if (sel === REEMPLAZO) {
     return { nombre: limpio($("#txtReemplazo").value) || "(nombre reemplazo)", reemplazo: true };
   }
@@ -119,10 +120,12 @@ function firma(cargo) {
 function initOperador() {
   const sel = $("#selOperador");
   sel.innerHTML =
+    `<option value="" disabled hidden>Seleccione operador</option>` +
     CONFIG.operadores.map((n) => `<option value="${escapeHTML(n)}">${escapeHTML(n)}</option>`).join("") +
     `<option value="${REEMPLAZO}">Reemplazo…</option>`;
-  const guardado = leer("operador", CONFIG.operadores[CONFIG.operadores.length - 1]);
-  sel.value = [...sel.options].some((o) => o.value === guardado) ? guardado : CONFIG.operadores[0];
+  const guardado = leer("operador", "");
+  if (guardado && [...sel.options].some((o) => o.value === guardado)) sel.value = guardado;
+  else sel.selectedIndex = 0;   // muestra "Seleccione operador"
   $("#txtReemplazo").value = leer("reemplazo", "");
 
   const sync = () => {
