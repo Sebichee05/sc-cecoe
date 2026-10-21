@@ -168,9 +168,9 @@ const CONFIG = {
   inicioResumen: "Trabajador llama por",
 
   // Etapas del traslado. Se pueden marcar varias; las frases se escriben
-  // siempre en este orden. "{motivo}" se reemplaza por el motivo de llamada.
+  // siempre en este orden, después de "Trabajador llama por <motivo>."
   etapasTraslado: [
-    { id: "conocimiento", label: "Toma de conocimiento", frase: "Trabajador llama por {motivo}." },
+    { id: "conocimiento", label: "Toma de conocimiento", frase: "" },
     { id: "solicita", label: "Solicita autorización", frase: "Solicita traslado por sus medios." },
     { id: "aprobada", label: "Autorización aprobada", frase: "Servicio médico autoriza traslado por sus medios a Policlínico Chuquicamata." },
     { id: "trasladado", label: "Trabajador trasladado", frase: "Trabajador ya es trasladado por sus medios a Policlínico." },
@@ -375,7 +375,7 @@ function bloqueResumen(mod) {
     <label for="f_motivo">Motivo de llamada</label>
     <input id="f_motivo" type="text" autocomplete="off"
       placeholder="${mod.resumen === "brigada" ? "Ej: amago de incendio en correa transportadora" : "Ej: dolor abdominal"}">
-    ${mod.resumen === "brigada" ? `<p class="hint">Se escribe solo: "${CONFIG.inicioResumen} …"</p>` : ""}
+    <p class="hint">Se escribe solo: "${CONFIG.inicioResumen} …"</p>
     ${chips}
     <label for="f_detalle">Detalle adicional (opcional)</label>
     <textarea id="f_detalle" placeholder="Solo si hace falta agregar algo más"></textarea>`;
@@ -398,11 +398,12 @@ function construirResumen(mod) {
   const partes = [];
 
   if (mod.resumen === "traslado") {
+    // El motivo de llamada siempre va al inicio
+    if (motivo) partes.push(`${CONFIG.inicioResumen} ${motivo}.`);
     const marcadas = [...$("#app").querySelectorAll(".chip.activo")].map((b) => b.dataset.etapa);
     CONFIG.etapasTraslado
-      .filter((e) => marcadas.includes(e.id))
-      .filter((e) => motivo || !e.frase.includes("{motivo}"))   // sin motivo aún, no se escribe esa frase
-      .forEach((e) => partes.push(e.frase.replace("{motivo}", motivo)));
+      .filter((e) => marcadas.includes(e.id) && e.frase)
+      .forEach((e) => partes.push(e.frase));
     if (detalle) partes.push(detalle);
   } else {
     if (!motivo) return detalle;
