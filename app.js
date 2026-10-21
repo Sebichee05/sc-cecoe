@@ -168,9 +168,9 @@ const CONFIG = {
   inicioResumen: "Trabajador llama por",
 
   // Etapas del traslado. Se pueden marcar varias; las frases se escriben
-  // siempre en este orden, después de "Trabajador llama por <motivo>."
+  // siempre en este orden. "{motivo}" se reemplaza por el motivo de llamada.
   etapasTraslado: [
-    { id: "conocimiento", label: "Toma de conocimiento", frase: "" },
+    { id: "conocimiento", label: "Toma de conocimiento", frase: "Trabajador llama por {motivo}." },
     { id: "solicita", label: "Solicita autorización", frase: "Solicita traslado por sus medios." },
     { id: "aprobada", label: "Autorización aprobada", frase: "Servicio médico autoriza traslado por sus medios a Policlínico Chuquicamata." },
     { id: "trasladado", label: "Trabajador trasladado", frase: "Trabajador ya es trasladado por sus medios a Policlínico." },
@@ -342,6 +342,17 @@ function vistaEmergencia(mod) {
       actualizar();
     })
   );
+  // Al empezar a escribir el motivo, se marca "Toma de conocimiento" solo
+  const motivoInput = $("#f_motivo");
+  const chipToma = $("#app").querySelector('.chip[data-etapa="conocimiento"]');
+  if (motivoInput && chipToma) {
+    let anterior = "";
+    motivoInput.addEventListener("input", () => {
+      if (!limpio(anterior) && limpio(motivoInput.value)) chipToma.classList.add("activo");
+      anterior = motivoInput.value;
+      actualizar();
+    });
+  }
 
   vistaActual = {
     generar() {
@@ -359,7 +370,7 @@ function vistaEmergencia(mod) {
     },
     limpiar() {
       $("#app").querySelectorAll("input:not([type=date]), textarea").forEach((i) => (i.value = ""));
-      $("#app").querySelectorAll(".chip").forEach((x, i) => x.classList.toggle("activo", i === 0));
+      $("#app").querySelectorAll(".chip").forEach((x, i) => x.classList.remove("activo"));
     },
   };
 }
@@ -369,13 +380,13 @@ function bloqueResumen(mod) {
   const chips = mod.resumen === "traslado"
     ? `<label>Etapa (puedes marcar varias)</label>
        <div class="chips">${CONFIG.etapasTraslado.map((e, i) =>
-         `<button type="button" class="chip${i === 0 ? " activo" : ""}" data-etapa="${e.id}">${e.label}</button>`).join("")}</div>`
+         `<button type="button" class="chip" data-etapa="${e.id}">${e.label}</button>`).join("")}</div>`
     : `<p class="hint">Al final se agrega: "${CONFIG.cierreBrigada}"</p>`;
   return `
     <label for="f_motivo">Motivo de llamada</label>
     <input id="f_motivo" type="text" autocomplete="off"
       placeholder="${mod.resumen === "brigada" ? "Ej: amago de incendio en correa transportadora" : "Ej: dolor abdominal"}">
-    <p class="hint">Se escribe solo: "${CONFIG.inicioResumen} …"</p>
+    <p class="hint">${mod.resumen === "brigada" ? `Se escribe solo: "${CONFIG.inicioResumen} …"` : `"Toma de conocimiento" escribe: "${CONFIG.inicioResumen} …"`}</p>
     ${chips}
     <label for="f_detalle">Detalle adicional (opcional)</label>
     <textarea id="f_detalle" placeholder="Solo si hace falta agregar algo más"></textarea>`;
@@ -398,12 +409,10 @@ function construirResumen(mod) {
   const partes = [];
 
   if (mod.resumen === "traslado") {
-    // El motivo de llamada siempre va al inicio
-    if (motivo) partes.push(`${CONFIG.inicioResumen} ${motivo}.`);
     const marcadas = [...$("#app").querySelectorAll(".chip.activo")].map((b) => b.dataset.etapa);
     CONFIG.etapasTraslado
-      .filter((e) => marcadas.includes(e.id) && e.frase)
-      .forEach((e) => partes.push(e.frase));
+      .filter((e) => marcadas.includes(e.id))
+      .forEach((e) => partes.push(e.frase.replace("{motivo}", motivo || "[motivo]")));
     if (detalle) partes.push(detalle);
   } else {
     if (!motivo) return detalle;
