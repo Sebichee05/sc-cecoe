@@ -17,19 +17,172 @@ const CONFIG = {
   horarios: ["08:00 a 20:00 hrs.", "20:00 a 08:00 hrs."],
   telefonoEmergencias: "327327",
 
+  // Lista de empresas (orden alfabético). Se puede escribir una que no esté.
+  empresas: [
+    "AGREDUCAM",
+    "AGRETRANS EL LOA",
+    "ALBIA S.A",
+    "ALGORITMOS SPA",
+    "ALMAR WATER SERVICES LATAM",
+    "ALPHA",
+    "ARAMARK",
+    "ARAMARK INDUSTRIAL",
+    "ARAMARK SERVICIOS MINEROS Y REMOTOS",
+    "ATLAS COPCO CHILE SPA",
+    "AUTOCLEAN",
+    "BESALCO MINERIA S.A",
+    "CACCIUTTOLO",
+    "CAINSA",
+    "CBS INDUSTRIAL",
+    "CERRO NEVADO",
+    "CESMEC S.A.",
+    "CHIER Spa",
+    "CIMAP LTDA",
+    "COMPAÑÍA DE TRANSPORTE VENTROSA",
+    "COMTECSA",
+    "CONFIPETROL CHILE SPA",
+    "CONSORCIO MOREAU SPA",
+    "CONSORCIO RAB INFINITE SPA",
+    "CONSORCIO SCHWAGGER INCIMMET",
+    "CONSTRUCTORA GARDILCIC LTD",
+    "CONTAC INGENIEROS",
+    "CSI",
+    "CYD INGENIERIA LTDA",
+    "CYG SERVICIOS INDUSTRIALES",
+    "DERK INGENIERIA Y GEOLOGIA",
+    "DISTRIBUIDORA CUMMINS CHILE",
+    "ECOLOA SPA",
+    "ENAEX SERVICIOS S.A.",
+    "ENGIE STREAM",
+    "ENKELD",
+    "EPIROC SAC",
+    "EQUANS INDUSTRIAL SPA",
+    "EXPLORACIONES MINERAS ADINAS (EMSA)",
+    "FCA TRANSPORTE",
+    "FERROCARRIL ANTOFAGASTA-BOLIVIA (FCAB)",
+    "FINNING CHILE",
+    "FLOW HYDRO CONSULTING GROUP SPA",
+    "FOJEDA",
+    "FPC INGENIERIA Y CONSTRUCCION SPA",
+    "FRACHT GROUP",
+    "GALOP LTDA",
+    "GEMINIS SPA",
+    "GEODATOS",
+    "GLOBAL SERVICE",
+    "GS3 CONSULTORES",
+    "HELLEMA HOLLAND ENGINEERING",
+    "HIDROPASCAL INGENIERIA",
+    "HIGH SERVICE INGENIERIA & CONSTRUCCION",
+    "HRI",
+    "HUALPEN",
+    "ICL CATODOS",
+    "ICV",
+    "INGENALSE",
+    "INGENIERÍA CIVIL VICENTE S.A.",
+    "INSTITUTO NACIONAL DE HIDRAULICA INH",
+    "INWASSER SPA",
+    "ITT FLUID TECHNOLOGY",
+    "JEJ INGENIERIA",
+    "JOY GLOBAL",
+    "KAIROS MINING",
+    "KAL TIRE",
+    "KDM INDUSTRIAL",
+    "KOMATSU",
+    "KONECRANES",
+    "KUPFER HERMANOS",
+    "LINKES CHILE",
+    "LOOP INGENIERIA Y SERVICIOS",
+    "MAGNA IV ENGINEERING",
+    "MAKEY",
+    "METSO CHILE",
+    "MINETEC",
+    "MISPA",
+    "MITTA",
+    "MONITORING",
+    "MOTOROLA SOLUTIONS",
+    "MSMIN",
+    "NEW TECH COPPER",
+    "NEXXO",
+    "PACOLL INGENIERIA",
+    "PSINET",
+    "PUCARA",
+    "R&Q INGENIERIA",
+    "REPAIRCO",
+    "RFP LOGISTICA",
+    "ROBOTIKA",
+    "SAIVAM",
+    "SALFA MANTENCIONES",
+    "SAN JOSE SERVICIOS SUB-CTTO KOMATSU",
+    "SANDVIK",
+    "SCHWAGER SERVICE",
+    "SECHE",
+    "SECURITAS CHILE",
+    "SERCOING",
+    "SERVINA",
+    "SERVING CONSULTORES",
+    "SGS",
+    "SGS MINERAL",
+    "SIGDO KOPPERS INGENIERIA Y CONSTRUCCION",
+    "SIGMA",
+    "SIMPLEX TECNOLOGIA Y SERVICIOS",
+    "SK INDUSTRIAL",
+    "SKF CHILENA",
+    "SMA",
+    "SOCIEDAD DE INVERSIONES MITT",
+    "SOCOAL",
+    "SONDA",
+    "SOURCING",
+    "STEEL",
+    "STN",
+    "TECNASIC",
+    "TECNOLOGIAS COBRA",
+    "TRANSMAC",
+    "TRANSMAT",
+    "TRANSPORTE CONSORCIO SAN ANTONIO",
+    "TRANSPORTE CVU SUB-CTTO ZUBLIN",
+    "TRANSPORTE DE Y FE",
+    "TRANYMEC",
+    "TTM",
+    "TUNNING INGENIERIA",
+    "UNISOURCE INGENIEROS",
+    "VECTOR CHILE",
+    "VEOLIA WATER TECHNOLOGIES & SOLUTIONS",
+    "VOLCAN NEVADO",
+    "WEIR MINERALS CHILE",
+    "WORLD SURVEY SERVICES WSS",
+    "XTREME MINING",
+    "ZUBLIN INTERNACIONAL GMBH",
+  ],
+
   // Módulos de emergencia (todos usan el mismo formato de mensaje)
   emergencias: [
-    { id: "incidente", titulo: "Incidente Operacional", ico: "⚠️" },
-    { id: "enfermedad", titulo: "Enfermedad Común", ico: "🩺" },
-    { id: "brigada", titulo: "Activación de Brigada", ico: "🚒" },
-    { id: "simulacro", titulo: "Simulacro", ico: "🎯" },
-    { id: "traslado", titulo: "Traslado por sus medios", ico: "🚑" },
+    // resumen: "traslado" -> motivo + botones de etapa | "brigada" -> motivo + despacho de brigada
+    { id: "incidente", titulo: "Incidente Operacional", ico: "⚠️", resumen: "traslado" },
+    { id: "enfermedad", titulo: "Enfermedad Común", ico: "🩺", resumen: "traslado" },
+    { id: "brigada", titulo: "Activación de Brigada", ico: "🚒", resumen: "brigada" },
+    { id: "simulacro", titulo: "Simulacro", ico: "🎯", resumen: "brigada" },
+    { id: "traslado", titulo: "Traslado por sus medios", ico: "🚑", resumen: "traslado" },
   ],
+
+  // Frase inicial del resumen: "Trabajador llama por <motivo>."
+  inicioResumen: "Trabajador llama por",
+
+  // Etapas del traslado. Se pueden marcar varias; las frases se escriben
+  // siempre en este orden. "{motivo}" se reemplaza por el motivo de llamada.
+  etapasTraslado: [
+    { id: "conocimiento", label: "Toma de conocimiento", frase: "Trabajador llama por {motivo}." },
+    { id: "solicita", label: "Solicita autorización", frase: "Solicita traslado por sus medios." },
+    { id: "aprobada", label: "Autorización aprobada", frase: "Servicio médico autoriza traslado por sus medios a Policlínico Chuquicamata." },
+    { id: "trasladado", label: "Trabajador trasladado", frase: "Trabajador ya es trasladado por sus medios a Policlínico." },
+  ],
+
+  // Frase final para Activación de Brigada y Simulacro
+  cierreBrigada: "Se despacha Brigada Divisional al lugar.",
 
   // Campos del mensaje de emergencia, en el orden en que aparecen
   camposEmergencia: [
     { id: "lugar", label: "Lugar" },
-    { id: "empresa", label: "Empresa" },
+    { id: "empresa", label: "Empresa", lista: "empresas" },
     { id: "gerencia", label: "Gerencia" },
     { id: "activa", label: "Nombre de quien Activa" },
     { id: "cargo", label: "Cargo" },
@@ -170,40 +323,94 @@ function vistaMenu() {
 function vistaEmergencia(mod) {
   $("#tituloVista").textContent = mod.titulo;
   const campos = CONFIG.camposEmergencia.map((c) => {
+    if (c.id === "resumen" && mod.resumen) return bloqueResumen(mod);
     const ctrl = c.multilinea
       ? `<textarea id="f_${c.id}" placeholder="${c.label}"></textarea>`
-      : `<input id="f_${c.id}" type="text" placeholder="${c.label}" autocomplete="off">`;
+      : `<input id="f_${c.id}" type="text" placeholder="${c.lista ? "Buscar o escribir " + c.label.toLowerCase() : c.label}" autocomplete="off"${c.lista ? ` list="dl_${c.lista}"` : ""}>`;
     return `<label for="f_${c.id}">${c.label}</label>${ctrl}`;
   }).join("");
 
   $("#app").innerHTML = `
     <section class="card">
-      <label for="f_fecha">Fecha</label>
-      <input id="f_fecha" type="date" value="${hoyISO()}">
       ${campos}
     </section>`;
 
   $("#app").addEventListener("input", actualizar);
+  $("#app").querySelectorAll(".chip").forEach((b) =>
+    b.addEventListener("click", () => {
+      b.classList.toggle("activo");
+      actualizar();
+    })
+  );
 
   vistaActual = {
     generar() {
-      const v = (id) => limpio($("#f_" + id).value);
+      const v = (id) => (id === "resumen" && mod.resumen ? construirResumen(mod) : limpio($("#f_" + id).value));
       const lineas = [
         "*Información de interés*",
         "*Tipo de emergencia*",
         `*${mod.titulo}*`,
         "",
-        `*Fecha*: ${fechaCorta($("#f_fecha").value)}`,
+        `*Fecha*: ${fechaCorta(hoyISO())}`,
       ];
       CONFIG.camposEmergencia.forEach((c) => lineas.push("", `*${c.label}*: ${v(c.id)}`));
       lineas.push("", firma("Operador de turno"));
       return lineas.join("\n");
     },
     limpiar() {
-      CONFIG.camposEmergencia.forEach((c) => ($("#f_" + c.id).value = ""));
-      $("#f_fecha").value = hoyISO();
+      $("#app").querySelectorAll("input:not([type=date]), textarea").forEach((i) => (i.value = ""));
+      $("#app").querySelectorAll(".chip").forEach((x, i) => x.classList.toggle("activo", i === 0));
     },
   };
+}
+
+/* ---------- Resumen asistido ---------- */
+function bloqueResumen(mod) {
+  const chips = mod.resumen === "traslado"
+    ? `<label>Etapa (puedes marcar varias)</label>
+       <div class="chips">${CONFIG.etapasTraslado.map((e, i) =>
+         `<button type="button" class="chip${i === 0 ? " activo" : ""}" data-etapa="${e.id}">${e.label}</button>`).join("")}</div>`
+    : `<p class="hint">Al final se agrega: "${CONFIG.cierreBrigada}"</p>`;
+  return `
+    <label for="f_motivo">Motivo de llamada</label>
+    <input id="f_motivo" type="text" autocomplete="off"
+      placeholder="${mod.resumen === "brigada" ? "Ej: amago de incendio en correa transportadora" : "Ej: dolor abdominal"}">
+    ${mod.resumen === "brigada" ? `<p class="hint">Se escribe solo: "${CONFIG.inicioResumen} …"</p>` : ""}
+    ${chips}
+    <label for="f_detalle">Detalle adicional (opcional)</label>
+    <textarea id="f_detalle" placeholder="Solo si hace falta agregar algo más"></textarea>`;
+}
+
+// "Amago de incendio" -> "amago de incendio" (respeta siglas como "CTT")
+function minusculaInicial(t) {
+  return /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t;
+}
+function conPunto(t) {
+  t = limpio(t);
+  if (!t) return t;
+  t = t[0].toUpperCase() + t.slice(1);
+  return /[.!?]$/.test(t) ? t : t + ".";
+}
+
+function construirResumen(mod) {
+  const motivo = minusculaInicial(sinPuntoFinal($("#f_motivo").value));
+  const detalle = conPunto($("#f_detalle").value);
+  const partes = [];
+
+  if (mod.resumen === "traslado") {
+    const marcadas = [...$("#app").querySelectorAll(".chip.activo")].map((b) => b.dataset.etapa);
+    CONFIG.etapasTraslado
+      .filter((e) => marcadas.includes(e.id))
+      .filter((e) => motivo || !e.frase.includes("{motivo}"))   // sin motivo aún, no se escribe esa frase
+      .forEach((e) => partes.push(e.frase.replace("{motivo}", motivo)));
+    if (detalle) partes.push(detalle);
+  } else {
+    if (!motivo) return detalle;
+    partes.push(`${CONFIG.inicioResumen} ${motivo}.`);
+    if (detalle) partes.push(detalle);
+    partes.push(CONFIG.cierreBrigada);
+  }
+  return partes.join(" ");
 }
 
 /* ---------- Inicio de turno ---------- */
@@ -215,8 +422,6 @@ function vistaInicioTurno() {
 
   $("#app").innerHTML = `
     <section class="card">
-      <label for="i_fecha">Fecha</label>
-      <input id="i_fecha" type="date" value="${hoyISO()}">
       <div class="fila">
         <div>
           <label for="i_turno">Turno</label>
@@ -277,7 +482,7 @@ function vistaInicioTurno() {
       <label>Tipo de emergencia</label>
       <input type="text" class="a_tipo" placeholder="Escolta médica" autocomplete="off">
       <div class="fila">
-        <div><label>Empresa</label><input type="text" class="a_empresa" placeholder="Gardilcic" autocomplete="off"></div>
+        <div><label>Empresa</label><input type="text" class="a_empresa" placeholder="Buscar empresa" autocomplete="off" list="dl_empresas"></div>
         <div><label>Gerencia</label><input type="text" class="a_gerencia" placeholder="Fundición" autocomplete="off"></div>
       </div>`;
     div.querySelector(".quitar").addEventListener("click", () => { div.remove(); actualizar(); });
@@ -304,7 +509,7 @@ function vistaInicioTurno() {
   (datos.gsso && datos.gsso.length ? datos.gsso : [""]).forEach(agregarGsso);
 
   function syncGsso(auto) {
-    const finde = esFinDeSemana($("#i_fecha").value);
+    const finde = esFinDeSemana(hoyISO());
     if (auto) $("#i_gssoOn").checked = finde;
     $("#boxGsso").hidden = !$("#i_gssoOn").checked;
     $("#gssoHint").textContent = finde
@@ -312,7 +517,6 @@ function vistaInicioTurno() {
       : "Día de semana: se omite (puedes activarlo manualmente).";
   }
   syncGsso(true);
-  $("#i_fecha").addEventListener("change", () => { syncGsso(true); actualizar(); });
   $("#i_gssoOn").addEventListener("change", () => { syncGsso(false); actualizar(); });
 
   function persistir() {
@@ -342,7 +546,7 @@ function vistaInicioTurno() {
       });
 
       const l = [
-        `*${fechaLarga($("#i_fecha").value)}*`,
+        `*${fechaLarga(hoyISO())}*`,
         `Turno ${v("i_turno")} de ${v("i_horario")}`,
         "",
         "Se recibe turno con las novedades mencionadas por el turno.",
@@ -366,7 +570,6 @@ function vistaInicioTurno() {
     },
     limpiar() {
       listaAct.innerHTML = "";
-      $("#i_fecha").value = hoyISO();
       syncGsso(true);
     },
   };
@@ -424,7 +627,20 @@ function initAcciones() {
   });
 }
 
+/* ---------- Listas de sugerencias (empresas, etc.) ---------- */
+// Crea un <datalist> por cada lista de CONFIG: el campo muestra sugerencias
+// mientras se escribe, y también acepta texto libre.
+function initListas() {
+  ["empresas"].forEach((nombre) => {
+    const dl = document.createElement("datalist");
+    dl.id = "dl_" + nombre;
+    dl.innerHTML = CONFIG[nombre].map((v) => `<option value="${escapeHTML(v)}"></option>`).join("");
+    document.body.appendChild(dl);
+  });
+}
+
 /* ---------- Arranque ---------- */
+initListas();
 initOperador();
 initAcciones();
 window.addEventListener("hashchange", router);

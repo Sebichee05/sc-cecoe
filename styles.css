@@ -88,6 +88,14 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); ou
 .modulo b { font-size: 15px; }
 .modulo.destacado { grid-column: 1 / -1; border-color: var(--accent); background: var(--accent-soft); }
 
+/* Botones de etapa */
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chip {
+  min-height: 48px; padding: 8px; border-radius: 10px; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600;
+  border: 1px solid var(--line); background: var(--bg); color: var(--text);
+}
+.chip.activo { background: var(--accent); border-color: var(--accent); color: #fff; }
+
 /* Activaciones / listas */
 .item {
   border: 1px dashed var(--line); border-radius: 12px; padding: 10px; margin-top: 10px; position: relative;
