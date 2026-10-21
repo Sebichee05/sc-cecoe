@@ -1,5 +1,5 @@
 // Cache simple para que la app funcione sin señal. Sube la versión al publicar cambios.
-const CACHE = "cecoe-v2";
+const CACHE = "cecoe-v3";
 const ARCHIVOS = ["./", "index.html", "styles.css", "app.js", "manifest.json", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", (e) => {
