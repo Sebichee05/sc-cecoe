@@ -160,8 +160,9 @@ const CONFIG = {
     // resumen: "traslado" -> motivo + botones de etapa | "brigada" -> motivo + despacho de brigada
     { id: "incidente", titulo: "Incidente Operacional", ico: "⚠️", resumen: "traslado" },
     { id: "enfermedad", titulo: "Enfermedad Común", ico: "🩺", resumen: "traslado" },
-    { id: "brigada", titulo: "Activación de Brigada", ico: "🚒", resumen: "brigada" },
-    { id: "simulacro", titulo: "Simulacro", ico: "🎯", resumen: "brigada" },
+    // "tipos": lista desplegable para elegir el tipo de emergencia dentro del módulo
+    { id: "brigada", titulo: "Brigada", ico: "🚒", resumen: "brigada",
+      tipos: ["Activación de Brigada", "Simulacro", "Escolta médica"] },
     { id: "traslado", titulo: "Traslado por sus medios", ico: "🚑", resumen: "traslado" },
   ],
 
@@ -334,6 +335,8 @@ function vistaEmergencia(mod) {
 
   $("#app").innerHTML = `
     <section class="card">
+      ${mod.tipos ? `<label for="f_tipo">Tipo de emergencia</label>
+      <select id="f_tipo">${mod.tipos.map((t) => `<option>${escapeHTML(t)}</option>`).join("")}</select>` : ""}
       ${campos}
     </section>`;
 
@@ -351,7 +354,7 @@ function vistaEmergencia(mod) {
       const lineas = [
         "*Información de interés*",
         "*Tipo de emergencia*",
-        `*${mod.titulo}*`,
+        `*${mod.tipos ? $("#f_tipo").value : mod.titulo}*`,
         "",
         `*Fecha*: ${fechaCorta(hoyISO())}`,
       ];
