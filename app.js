@@ -39,6 +39,7 @@ const CONFIG = {
     "CESMEC S.A.",
     "CHIER Spa",
     "CIMAP LTDA",
+    "CODELCO",
     "COMPAÑÍA DE TRANSPORTE VENTROSA",
     "COMTECSA",
     "CONFIPETROL CHILE SPA",
@@ -167,7 +168,7 @@ const CONFIG = {
   ],
 
   // Frase inicial del resumen: "Trabajador llama por <motivo>."
-  inicioResumen: "Trabajador llama por",
+  inicioResumen: "Llama por",
 
   // Etapas del traslado. Se pueden marcar varias; las frases se escriben
   // siempre en este orden, después de "Trabajador llama por <motivo>."
