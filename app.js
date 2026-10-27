@@ -155,6 +155,27 @@ const CONFIG = {
     "XTREME MINING",
     "ZUBLIN INTERNACIONAL GMBH",
   ],
+  gerencias: [
+    "Refinería - GR",
+    "Fundición - GF",
+    "Concentradora Operaciones - GCO",
+    "Concentradora Mantenimiento - GCM",
+    "Servicios y Suministros - GSYS",
+    "General - GG",
+    "Aguas y Relaves - GAR",
+    "Administración - GAD",
+    "Sustentabilidad y Asuntos Externos - GSAE",
+    "Extracción y Lixiviación - GEL",
+    "Mina Chuquicamata - GM",
+    "Proyectos - GPRO",
+    "Operaciones Tecnológicas - GOTEC",
+    "Operaciones Mina Subterránea - GOMCHS",
+    "Mantenimiento Mina Subterránea - GMMCHS",
+    "Obras Mina Subterránea - GOMS",
+    "Recursos Mineros y Desarrollo - GRMD",
+    "Logística Bodega e Inventario - GLBI",
+    "Seguridad y Salud Ocupacional - GSSO",
+  ],
 
   // Módulos de emergencia (todos usan el mismo formato de mensaje)
   emergencias: [
@@ -187,7 +208,7 @@ const CONFIG = {
   camposEmergencia: [
     { id: "lugar", label: "Lugar" },
     { id: "empresa", label: "Empresa", lista: "empresas" },
-    { id: "gerencia", label: "Gerencia" },
+    { id: "gerencia", label: "Gerencia", lista: "gerencias" },
     { id: "activa", label: "Nombre de quien Activa" },
     { id: "cargo", label: "Cargo" },
     { id: "resumen", label: "Resumen", multilinea: true },
