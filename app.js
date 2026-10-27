@@ -510,7 +510,7 @@ function vistaInicioTurno() {
       <input type="text" class="a_tipo" placeholder="Escolta médica" autocomplete="off">
       <div class="fila">
         <div><label>Empresa</label><input type="text" class="a_empresa" placeholder="Buscar empresa" autocomplete="off" list="dl_empresas"></div>
-        <div><label>Gerencia</label><input type="text" class="a_gerencia" placeholder="Fundición" autocomplete="off"></div>
+        <div><label>Gerencia</label><input type="text" class="a_gerencia" placeholder="Fundición" autocomplete="off" list="dl_gerencias"></div>
       </div>`;
     div.querySelector(".quitar").addEventListener("click", () => { div.remove(); actualizar(); });
     listaAct.appendChild(div);
@@ -654,17 +654,26 @@ function initAcciones() {
   });
 }
 
-/* ---------- Listas de sugerencias (empresas, etc.) ---------- */
-// Crea un <datalist> por cada lista de CONFIG: el campo muestra sugerencias
-// mientras se escribe, y también acepta texto libre.
+
+/* ---------- Listas de sugerencias (empresas, gerencias, etc.) ---------- */
+// Crea un <datalist> por cada lista de CONFIG.
+// Permite mostrar sugerencias y aceptar texto libre.
+
 function initListas() {
-  ["empresas"].forEach((nombre) => {
+  ["empresas", "gerencias"].forEach((nombre) => {
     const dl = document.createElement("datalist");
     dl.id = "dl_" + nombre;
-    dl.innerHTML = CONFIG[nombre].map((v) => `<option value="${escapeHTML(v)}"></option>`).join("");
+
+    CONFIG[nombre].forEach((valor) => {
+      const option = document.createElement("option");
+      option.value = valor;
+      dl.appendChild(option);
+    });
+
     document.body.appendChild(dl);
   });
 }
+
 
 /* ---------- Arranque ---------- */
 initListas();
